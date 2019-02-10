@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_02_09_192840) do
+ActiveRecord::Schema.define(version: 2019_02_10_162729) do
 
   create_table "cards", force: :cascade do |t|
     t.string "front"
@@ -24,6 +24,15 @@ ActiveRecord::Schema.define(version: 2019_02_09_192840) do
   create_table "collections", force: :cascade do |t|
     t.string "title"
     t.boolean "favorite"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "created_by"
+  end
+
+  create_table "users", force: :cascade do |t|
+    t.string "name"
+    t.string "email"
+    t.string "password_digest"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

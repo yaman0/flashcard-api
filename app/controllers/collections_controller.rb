@@ -10,6 +10,7 @@ class CollectionsController < ApplicationController
   # POST /collections
   def create
     @collection = Collection.create!(collection_params)
+    @collection.favorite = false
     json_response(@collection, :created)
   end
 
@@ -34,7 +35,7 @@ class CollectionsController < ApplicationController
 
   def collection_params
     # whitelist params
-    params.permit(:title)
+    params.permit(:title, :created_by)
   end
 
   def set_collection

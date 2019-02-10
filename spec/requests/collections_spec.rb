@@ -52,13 +52,15 @@ RSpec.describe 'Collection API', type: :request do
   # Test suite for POST /collections
   describe 'POST /collections' do
     # valid payload
-    let(:valid_attributes) { { title: 'Learn Elm', favorite: 'true' } }
+    let(:valid_attributes) { { title: 'Learn Elm', created_by: '1' } }
 
     context 'when the request is valid' do
       before { post '/collections', params: valid_attributes }
 
-      it 'creates a collection' do
+       it 'creates a collection' do
         expect(json['title']).to eq('Learn Elm')
+        expect(json['created_by']).to eq('1')
+        expect(json['favorite']).to eq(false)
       end
 
       it 'returns status code 201' do
