@@ -2,14 +2,16 @@ require 'rails_helper'
 
 RSpec.describe 'Items API', type: :request do
 # Initialize the test data
-  let!(:collection) {create(:collection)}
-  let!(:cards) {create_list(:card, 20, collection_id: collection.id)}
-  let(:collection_id) {collection.id}
-  let(:id) {cards.first.id}
+  let(:user) { create(:user) }
+  let!(:collection) { create(:collection, created_by: user.id) }
+  let!(:cards) { create_list(:card, 20, collection_id: collection.id) }
+  let(:collection_id) { collection.id }
+  let(:id) { cards.first.id }
+  let(:headers) { valid_headers }
 
 # Test suite for GET /collections/:collection_id/cards
   describe 'GET /collections/:collection_id/cards' do
-    before {get "/collections/#{collection_id}/cards"}
+    before { get "/collections/#{collection_id}/cards", params: {}, headers: headers }
 
     context 'when collection exists' do
       it 'returns status code 200' do
@@ -36,7 +38,7 @@ RSpec.describe 'Items API', type: :request do
 
 # Test suite for GET /collections/:collection_id/cards/:id
   describe 'GET /collections/:collection_id/cards/:id' do
-    before {get "/collections/#{collection_id}/cards/#{id}"}
+    before { get "/collections/#{collection_id}/cards/#{id}", params: {}, headers: headers }
 
     context 'when collection card exists' do
       it 'returns status code 200' do
@@ -63,10 +65,12 @@ RSpec.describe 'Items API', type: :request do
 
 # Test suite for POST /collections/:collection_id/cards
   describe 'POST /collections/:collection_id/cards' do
-    let(:valid_attributes) {{front: 'Visit Narnia', back: 'Visit Narnia'}}
+    let(:valid_attributes) { { front: 'Visit Narnia', back: 'Visit Narnia' }.to_json }
 
     context 'when request attributes are valid' do
-      before {post "/collections/#{collection_id}/cards", params: valid_attributes}
+      before do
+        post "/collections/#{collection_id}/cards", params: valid_attributes, headers: headers
+      end
 
       it 'returns status code 201' do
         expect(response).to have_http_status(201)
@@ -74,7 +78,7 @@ RSpec.describe 'Items API', type: :request do
     end
 
     context 'when an invalid request' do
-      before {post "/collections/#{collection_id}/cards", params: {}}
+      before { post "/collections/#{collection_id}/cards", params: {}, headers: headers }
 
       it 'returns status code 422' do
         expect(response).to have_http_status(422)
@@ -88,9 +92,11 @@ RSpec.describe 'Items API', type: :request do
 
 # Test suite for PUT /collections/:collection_id/cards/:id
   describe 'PUT /collections/:collection_id/cards/:id' do
-    let(:valid_attributes) {{front: 'Mozart', back: 'Mozart'}}
+    let(:valid_attributes) {{front: 'Mozart', back: 'Mozart'}.to_json}
 
-    before {put "/collections/#{collection_id}/cards/#{id}", params: valid_attributes}
+    before do
+      put "/collections/#{collection_id}/cards/#{id}", params: valid_attributes, headers: headers
+    end
 
     context 'when card exists' do
       it 'returns status code 204' do
@@ -119,7 +125,7 @@ RSpec.describe 'Items API', type: :request do
 
 # Test suite for DELETE /collections/:id
   describe 'DELETE /collections/:id' do
-    before {delete "/collections/#{collection_id}/cards/#{id}"}
+    before { delete "/collections/#{collection_id}/cards/#{id}", params: {}, headers: headers }
 
     it 'returns status code 204' do
       expect(response).to have_http_status(204)

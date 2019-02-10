@@ -3,13 +3,13 @@ class CollectionsController < ApplicationController
 
   # GET /collections
   def index
-    @collections = Collection.all
+    @collections = current_user.collections
     json_response(@collections)
   end
 
   # POST /collections
   def create
-    @collection = Collection.create!(collection_params)
+    @collection = current_user.collections.create!(collection_params)
     @collection.favorite = false
     json_response(@collection, :created)
   end
@@ -35,7 +35,7 @@ class CollectionsController < ApplicationController
 
   def collection_params
     # whitelist params
-    params.permit(:title, :created_by)
+    params.permit(:title)
   end
 
   def set_collection
