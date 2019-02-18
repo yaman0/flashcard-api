@@ -50,9 +50,6 @@ test:
   database: flashapi-test
   pool: 5
   timeout: 5000
-  username: <%= ENV['PSQLUSER'] %>
-  password: <%= ENV['PSQLPWD'] %>
-
 
 production:
   adapter: postgresql
