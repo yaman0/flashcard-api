@@ -47,7 +47,7 @@ development:
 test:
   adapter: postgresql
   encoding: unicode
-  database: flashapi-test
+  database: flashapitest
   pool: 5
   timeout: 5000
 
