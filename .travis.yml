@@ -4,6 +4,14 @@ rvm:
 env:
   matrix:
     secure: i1q9f07Ff3FQmIV3J1x3z9bjwW2U1zcqNcUlCPiVgimsD49DHLs8HEpRGA3c7V4DrMT4C0WtJkH071ug1Zm/jMblx4+9gFPHE0/s3FpTMpewmdvIYxxiJRNXgXBZn5zdZLL5aDnf/ztMxs1ve7iw/+np7tFVyi5CE5N2CrqcX8BcWH4Ax3wsIXVUL+kt45IctW15NMBgdk6q+iGsQ6xkeiKDzlYljg+5+HGDPk1EVziZgNYVOnkpNon5ECC+G21hVpoQcJyWjijtTH+lPxdgachmP2kn9WI8gN1syDSx9SZ/qh7jpAwCC6sKr+CpBblNmVnPA/rvx8GN2Sa4nX+Fz6hQSSJ+RJlELZTGllUwGR5x6qvEETlCTGQUKWQ4KoSrrT8iH+uBJsi1p3B3Osx4dnDSU6GqMC3fSTOcY9JngKiHbfzbUnLuXAvKbhDuaHdwqNhmska12UY5O5gybfPebsaQVisV4XI/5AkNdFU/aMTG6lNDoZ49imjP/tgDBfS/ruLk04vtxQCtqEOMyqt8aWM0QAepVzKUGvgk41wGlmDqz34cZxt9V/3fOFacu99K/AueLG0YU7eEU26rCti7onEXuXiLAN3WBTnYieUlHa76jJwNtrD0+Zt8UGHCAASXPcnTDiUdpLt3and7vdZLOeO9VnA45KUHhQCu7G1E0A4=
+deploy:
+  provider: heroku
+  api_key:
+    secure: Z4XCFUC6S+MvXb9a1CiHWAqsj+vO0n/zCDz/0LUfyxCw1Czi27bLOQTKGLc7oS2+wPHUjj33qjftpVEsfID7NpVF0/9c5mAlbDVJUADtANRUlx8q8g/gOQUP1BraFP33Qab+svuZ0Y95+eDcixRGAIcy3B0RasCDjEaWkXioiLudRgGpc25K++Hgybi2xSr9bcjMurKGQ6TIMrhJi+c06voxB/EEZ06gwz/hBfwlSkktRbU4PaTkHFrrTv1ivvnn5Z2Kg11V2TZy+t2hmP1Tv3bXcs+dr/lG96mhGWcP0QaUKBhN0RwYbEbHs+rchqPGJvhbvwW327CCGmxOewoATs8Vg5ajr9JArRBRBSWnhvjxVGoTxHX79/zXHVpBo76TuyzwLTF2/kp7WIl24HXbQEmiI2/upYr4FnhTpZc6frqaKFkUqJUjWYd8WJmP4Clfv8INBNo7z/yubhpmNf3y0e1LwiEReTbDMymUUoEzw+I0Ck23y5bLN5+D2eH/dBTpn0kG/H5TPbHp26jBwgjkzga3lQZyxaB+e0/iLuZt/1hY3pX6xCe8TwZEXic0rGacCbLFm4/NjEwkbuEdrzWwzL0CAsZoZCC6ewGfDmNMcsNHltIYPtCgr5co15Un/ystGisxAKPzaGrXxyp+nD40KnSwXiuq2CbDSJvQpXfE8sU=
+  app: yaman0-flashcard-api
+  on:
+    repo: yaman0/flashcard-api
+  run: rake db:migrate
 before_script:
   - echo $MASTERKEY >> config/master.key
   - psql -c 'create database flashapitest;' -U postgres
